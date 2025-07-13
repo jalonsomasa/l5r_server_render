@@ -60,6 +60,7 @@ function onClientConnected( socket )
         user.userId = kUserId;
         user.socket = socket;
         DataModel.mapUserIdToUser.set( kUserId, user );
+        DataModel.mapUserIdToLoginTime.set( kUserId, Date.now() );
 
         socket.on( "disconnect", Utils.callAndCatchErrors.bind( this, onDisconnect, user ) );
         socket.on( "tryGameReconnection", Utils.callAndCatchErrors.bind( this, onTryGameReconnection, user ) );
@@ -76,7 +77,12 @@ function onClientConnected( socket )
     {
         console.log( "Server.js :: onClientConnected() :: connectionRejected" );
 
-        socket.emit( "connectionRejected", 0 );
+        // With Render's server 2 connection attemps are done if the server asleep.
+        if ( !DataModel.mapUserIdToLoginTime.has( kUserId )
+            || Date.now() - DataModel.mapUserIdToLoginTime.get( kUserId ) > 1000 )
+        {
+            socket.emit( "connectionRejected", 0 );
+        }
     }
 
     if ( !keepAliveTimer && !Config.isDebugMode )
@@ -126,6 +132,7 @@ function onClientConnected( socket )
         }
 
         DataModel.mapUserIdToUser.delete( myUser.userId );
+        DataModel.mapUserIdToLoginTime.delete( myUser.userId );
         socket.broadcast.emit( "userDisconnected", myUser.userId );
         console.log( "onDisconnect :: User disconnected: " + myUser.userId + " :: " + reason );
 

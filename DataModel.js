@@ -21,4 +21,11 @@ DataModel.mapUserIdToUser = new Map();
  * @static
  * @const
  */
+DataModel.mapUserIdToLoginTime = new Map();
+
+/**
+ * @type {Map}
+ * @static
+ * @const
+ */
 DataModel.mapGameIdToGame = new Map();
