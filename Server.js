@@ -52,6 +52,7 @@ function main()
 function onClientConnected( socket )
 {
     const kUserId = socket.handshake.query.userId;    
+    console.log( "Server.js :: onClientConnected() :: kUserId=" + kUserId );
 
     if ( !DataModel.mapUserIdToUser.has( kUserId ) )
     {
@@ -64,6 +65,8 @@ function onClientConnected( socket )
         socket.on( "tryGameReconnection", Utils.callAndCatchErrors.bind( this, onTryGameReconnection, user ) );
 
         ServiceLocator.gatewayEventManager.add( user );
+
+        console.log( "Server.js :: onClientConnected() :: connectionAccepted" );
     
         // Notify users.
         socket.emit( "connectionAccepted" );
@@ -71,6 +74,8 @@ function onClientConnected( socket )
     }
     else
     {
+        console.log( "Server.js :: onClientConnected() :: connectionRejected" );
+
         socket.emit( "connectionRejected", 0 );
     }
 

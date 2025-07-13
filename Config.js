@@ -56,7 +56,7 @@ Config.init = function( chatServerPort )
     }
     else
     {
-        Config.httpServerUrl = "http://l5rdojo.epizy.com";
+        Config.httpServerUrl = "https://l5rdojo.epizy.com";
         Config.chatServerUrl = "https://l5r-server.onrender.com:" + chatServerPort.toString();
         Config.amfPhpUrl = Config.httpServerUrl;
     }
