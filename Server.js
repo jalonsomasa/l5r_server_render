@@ -79,18 +79,18 @@ function onClientConnected( socket )
 
         // With Render's server 2 connection attemps are done if the server asleep.
         if ( !DataModel.mapUserIdToLoginTime.has( kUserId )
-            || Date.now() - DataModel.mapUserIdToLoginTime.get( kUserId ) > 1000 )
+            || Date.now() - DataModel.mapUserIdToLoginTime.get( kUserId ) > 4000 )
         {
             socket.emit( "connectionRejected", 0 );
         }
     }
 
-    if ( !keepAliveTimer && !Config.isDebugMode )
+    /*if ( !keepAliveTimer && !Config.isDebugMode )
     {
 		console.log( "onClientConnected :: keep alive timer initialized." );
 		pingServer();
         keepAliveTimer = setInterval( pingServer, 10 * 60 * 1000 );
-    }
+    }*/
 	
 	function pingServer()
 	{
