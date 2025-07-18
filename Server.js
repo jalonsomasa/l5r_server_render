@@ -75,12 +75,12 @@ function onClientConnected( socket )
     }
     else
     {
-        console.log( "Server.js :: onClientConnected() :: connectionRejected" );
-
         // With Render's server 2 connection attemps are done if the server asleep.
         if ( !DataModel.mapUserIdToLoginTime.has( kUserId )
             || Date.now() - DataModel.mapUserIdToLoginTime.get( kUserId ) > 4000 )
         {
+            console.log( "Server.js :: onClientConnected() :: connectionRejected" );
+
             socket.emit( "connectionRejected", 0 );
         }
     }
