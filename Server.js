@@ -85,12 +85,12 @@ function onClientConnected( socket )
         }
     }
 
-    /*if ( !keepAliveTimer && !Config.isDebugMode )
+    if ( !keepAliveTimer && !Config.isDebugMode )
     {
 		console.log( "onClientConnected :: keep alive timer initialized." );
 		pingServer();
         keepAliveTimer = setInterval( pingServer, 10 * 60 * 1000 );
-    }*/
+    }
 	
 	function pingServer()
 	{
